@@ -7,8 +7,8 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.db.session import Base
 
 
-class Lease(Base):
-    __tablename__ = "leases"
+class Payment(Base):
+    __tablename__ = "payments"
 
     id: Mapped[uuid.UUID] = mapped_column(
         UUID(as_uuid=True),
@@ -16,45 +16,36 @@ class Lease(Base):
         default=uuid.uuid4,
     )
 
-    tenant_id: Mapped[uuid.UUID] = mapped_column(
+    lease_id: Mapped[uuid.UUID] = mapped_column(
         UUID(as_uuid=True),
-        ForeignKey("tenants.id", ondelete="CASCADE"),
+        ForeignKey("leases.id", ondelete="CASCADE"),
         nullable=False,
     )
 
-    flat_id: Mapped[uuid.UUID] = mapped_column(
-        UUID(as_uuid=True),
-        ForeignKey("flats.id", ondelete="CASCADE"),
-        nullable=False,
-    )
-
-    lease_start: Mapped[Date] = mapped_column(
-        Date,
-        nullable=False,
-    )
-
-    lease_end: Mapped[Date] = mapped_column(
-        Date,
-        nullable=False,
-    )
-
-    monthly_rent: Mapped[float] = mapped_column(
+    amount: Mapped[float] = mapped_column(
         Numeric(10, 2),
         nullable=False,
     )
 
-    security_deposit: Mapped[float] = mapped_column(
-        Numeric(10, 2),
+    payment_date: Mapped[Date] = mapped_column(
+        Date,
         nullable=False,
     )
 
-    due_day: Mapped[int] = mapped_column(
+    payment_method: Mapped[str] = mapped_column(
+        String(30),
+        nullable=False,
+    )
+
+    receipt_number: Mapped[str] = mapped_column(
+        String(100),
+        unique=True,
         nullable=False,
     )
 
     status: Mapped[str] = mapped_column(
         String(20),
-        default="Active",
+        default="Paid",
         nullable=False,
     )
 
@@ -69,17 +60,7 @@ class Lease(Base):
         onupdate=func.now(),
     )
 
-    tenant = relationship(
-        "Tenant",
-        back_populates="leases",
-    )
-
-    flat = relationship(
-        "Flat",
-        back_populates="leases",
-    )
-    payments = relationship(
-    "Payment",
-    back_populates="lease",
-    cascade="all, delete-orphan",
+    lease = relationship(
+        "Lease",
+        back_populates="payments",
     )

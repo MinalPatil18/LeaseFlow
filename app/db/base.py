@@ -5,3 +5,4 @@ from app.features.property.models import Property
 from app.features.flats.models import Flat
 from app.features.tenant.models import Tenant
 from app.features.lease.models import Lease
+from app.features.payment.models import Payment
