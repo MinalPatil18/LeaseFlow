@@ -2,7 +2,7 @@ import uuid
 
 from sqlalchemy import Boolean, DateTime, ForeignKey, String, Text, func
 from sqlalchemy.dialects.postgresql import UUID
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.session import Base
 
@@ -22,40 +22,13 @@ class Property(Base):
         nullable=False,
     )
 
-    property_name: Mapped[str] = mapped_column(
-        String(150),
-        nullable=False,
-    )
-
-    property_type: Mapped[str] = mapped_column(
-        String(50),
-        nullable=False,
-    )
-
-    address: Mapped[str] = mapped_column(
-        String(255),
-        nullable=False,
-    )
-
-    city: Mapped[str] = mapped_column(
-        String(100),
-        nullable=False,
-    )
-
-    state: Mapped[str] = mapped_column(
-        String(100),
-        nullable=False,
-    )
-
-    pincode: Mapped[str] = mapped_column(
-        String(10),
-        nullable=False,
-    )
-
-    description: Mapped[str | None] = mapped_column(
-        Text,
-        nullable=True,
-    )
+    property_name: Mapped[str] = mapped_column(String(150), nullable=False)
+    property_type: Mapped[str] = mapped_column(String(50), nullable=False)
+    address: Mapped[str] = mapped_column(String(255), nullable=False)
+    city: Mapped[str] = mapped_column(String(100), nullable=False)
+    state: Mapped[str] = mapped_column(String(100), nullable=False)
+    pincode: Mapped[str] = mapped_column(String(10), nullable=False)
+    description: Mapped[str | None] = mapped_column(Text, nullable=True)
 
     is_active: Mapped[bool] = mapped_column(
         Boolean,
@@ -72,4 +45,15 @@ class Property(Base):
         DateTime(timezone=True),
         server_default=func.now(),
         onupdate=func.now(),
+    )
+
+    owner = relationship(
+        "User",
+        back_populates="properties",
+    )
+
+    flats = relationship(
+        "Flat",
+        back_populates="property",
+        cascade="all, delete-orphan",
     )
