@@ -6,3 +6,4 @@ from app.features.flats.models import Flat
 from app.features.tenant.models import Tenant
 from app.features.lease.models import Lease
 from app.features.payment.models import Payment
+from app.features.property_image.models import PropertyImage

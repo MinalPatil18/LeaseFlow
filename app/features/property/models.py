@@ -57,3 +57,8 @@ class Property(Base):
         back_populates="property",
         cascade="all, delete-orphan",
     )
+    images = relationship(
+        "PropertyImage",
+         back_populates="property",
+         cascade="all, delete-orphan",
+    )

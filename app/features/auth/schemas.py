@@ -9,6 +9,7 @@ class UserCreate(BaseModel):
     password: str
     role: str = "tenant"
 
+
 class UserResponse(BaseModel):
     id: UUID
     full_name: str
@@ -28,8 +29,11 @@ class TokenResponse(BaseModel):
     access_token: str
     token_type: str = "bearer"
 
+
 class ChangePasswordRequest(BaseModel):
     current_password: str
     new_password: str
+
+
 class UpdateProfileRequest(BaseModel):
     full_name: str

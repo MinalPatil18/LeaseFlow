@@ -1,6 +1,6 @@
 from uuid import UUID
 
-from fastapi import APIRouter, Depends, status
+from fastapi import APIRouter, Depends, Query, status
 from sqlalchemy.orm import Session
 
 from app.db.session import get_db
@@ -47,6 +47,55 @@ def get_my_properties(
     return PropertyService.get_my_properties(
         db,
         current_user,
+    )
+
+
+@router.get("/paged")
+def get_my_properties_paginated(
+    page: int = Query(1, ge=1),
+    size: int = Query(10, ge=1, le=100),
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    return PropertyService.get_my_properties_paginated(
+        db,
+        current_user,
+        page,
+        size,
+    )
+
+
+@router.get(
+    "/search",
+    response_model=list[PropertyResponse],
+)
+def search_properties(
+    city: str | None = None,
+    property_type: str | None = None,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    return PropertyService.search_properties(
+        db,
+        current_user,
+        city,
+        property_type,
+    )
+
+
+@router.get(
+    "/sorted",
+    response_model=list[PropertyResponse],
+)
+def get_sorted_properties(
+    sort: str = "property_name",
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    return PropertyService.get_sorted_properties(
+        db,
+        current_user,
+        sort,
     )
 
 

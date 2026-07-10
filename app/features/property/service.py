@@ -3,6 +3,7 @@ from uuid import UUID
 from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
 
+from app.common.pagination import paginate
 from app.features.auth.models import User
 from app.features.property.models import Property
 from app.features.property.repository import PropertyRepository
@@ -44,6 +45,50 @@ class PropertyService:
         return PropertyRepository.get_properties_by_owner(
             db,
             current_user.id,
+        )
+
+    @staticmethod
+    def get_my_properties_paginated(
+        db: Session,
+        current_user: User,
+        page: int = 1,
+        size: int = 10,
+    ):
+        query = PropertyRepository.get_properties_paginated(
+            db,
+            current_user.id,
+        )
+
+        return paginate(
+            query,
+            page,
+            size,
+        )
+
+    @staticmethod
+    def search_properties(
+        db: Session,
+        current_user: User,
+        city: str | None = None,
+        property_type: str | None = None,
+    ):
+        return PropertyRepository.search_properties(
+            db,
+            current_user.id,
+            city,
+            property_type,
+        )
+
+    @staticmethod
+    def get_sorted_properties(
+        db: Session,
+        current_user: User,
+        sort: str,
+    ):
+        return PropertyRepository.get_sorted_properties(
+            db,
+            current_user.id,
+            sort,
         )
 
     @staticmethod
