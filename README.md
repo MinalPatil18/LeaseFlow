@@ -61,14 +61,21 @@ npm run dev
 
 ## 📸 Screenshots
 
-Add your screenshots inside a folder named `screenshots`.
+### Login
 
-Example:
+![Login](screenshots/login.png)
 
-- Login Page
-- Dashboard
-- Properties
-- Payments
+### Dashboard
+
+![Dashboard](screenshots/dashboard.png)
+
+### Properties
+
+![Properties](screenshots/properties.png)
+
+### Payments
+
+![Payments](screenshots/payments.png)
 
 ## 👩‍💻 Author
 
