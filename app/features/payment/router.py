@@ -1,13 +1,14 @@
 from uuid import UUID
 
-from fastapi import APIRouter, Depends, status
+from fastapi import APIRouter, Depends, Query, status
 from sqlalchemy.orm import Session
 
 from app.db.session import get_db
 from app.features.payment.schemas import (
     PaymentCreate,
-    PaymentUpdate,
     PaymentResponse,
+    PaymentSummary,
+    PaymentUpdate,
 )
 from app.features.payment.service import PaymentService
 
@@ -43,6 +44,24 @@ def get_payments_by_lease(
     return PaymentService.get_payments_by_lease(
         db,
         lease_id,
+    )
+
+
+@router.get(
+    "/lease/{lease_id}/summary",
+    response_model=PaymentSummary,
+)
+def get_payment_summary(
+    lease_id: UUID,
+    month: int = Query(..., ge=1, le=12),
+    year: int = Query(..., ge=2000),
+    db: Session = Depends(get_db),
+):
+    return PaymentService.get_payment_summary(
+        db,
+        lease_id,
+        month,
+        year,
     )
 
 

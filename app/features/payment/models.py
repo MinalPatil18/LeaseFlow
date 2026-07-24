@@ -1,6 +1,6 @@
 import uuid
 
-from sqlalchemy import Date, DateTime, ForeignKey, Numeric, String, func
+from sqlalchemy import Date, DateTime, ForeignKey, Numeric, String, Integer, func
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
@@ -32,9 +32,25 @@ class Payment(Base):
         nullable=False,
     )
 
+    # Automatically derived from payment_date
+    payment_month: Mapped[int] = mapped_column(
+        Integer,
+        nullable=False,
+    )
+
+    payment_year: Mapped[int] = mapped_column(
+        Integer,
+        nullable=False,
+    )
+
     payment_method: Mapped[str] = mapped_column(
         String(30),
         nullable=False,
+    )
+
+    remarks: Mapped[str | None] = mapped_column(
+        String(255),
+        nullable=True,
     )
 
     receipt_number: Mapped[str] = mapped_column(

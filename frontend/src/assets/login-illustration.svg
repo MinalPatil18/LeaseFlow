@@ -1,0 +1,148 @@
+<svg width="520" height="520" viewBox="0 0 520 520" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+  <defs>
+    <linearGradient id="bg1" x1="0" y1="0" x2="520" y2="520">
+      <stop stop-color="#FFD6E8"/>
+      <stop offset="1" stop-color="#ECE6FF"/>
+    </linearGradient>
+
+    <linearGradient id="building" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#F8F8FF"/>
+    </linearGradient>
+
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#FF5B93"/>
+      <stop offset="1" stop-color="#7C6CFB"/>
+    </linearGradient>
+
+    <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="12" stdDeviation="18" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+
+  <circle cx="90" cy="90" r="70" fill="#FFE6F1"/>
+
+  <circle cx="430" cy="120" r="80" fill="#EFE9FF"/>
+
+  <circle cx="410" cy="430" r="70" fill="#F6ECFF"/>
+
+  <!-- Building -->
+
+  <g filter="url(#shadow)">
+
+    <rect
+      x="150"
+      y="80"
+      width="220"
+      height="300"
+      rx="28"
+      fill="url(#building)"
+    />
+
+    <!-- Windows -->
+
+    <g fill="#F3F1FF">
+
+      <rect x="180" y="120" width="36" height="36" rx="8"/>
+      <rect x="242" y="120" width="36" height="36" rx="8"/>
+      <rect x="304" y="120" width="36" height="36" rx="8"/>
+
+      <rect x="180" y="180" width="36" height="36" rx="8"/>
+      <rect x="242" y="180" width="36" height="36" rx="8"/>
+      <rect x="304" y="180" width="36" height="36" rx="8"/>
+
+      <rect x="180" y="240" width="36" height="36" rx="8"/>
+      <rect x="242" y="240" width="36" height="36" rx="8"/>
+      <rect x="304" y="240" width="36" height="36" rx="8"/>
+
+    </g>
+
+    <!-- Door -->
+
+    <rect
+      x="230"
+      y="300"
+      width="60"
+      height="80"
+      rx="12"
+      fill="url(#accent)"
+    />
+
+  </g>
+
+  <!-- Floating Card Left -->
+
+  <g filter="url(#shadow)">
+
+    <rect
+      x="40"
+      y="150"
+      width="120"
+      height="80"
+      rx="22"
+      fill="white"
+    />
+
+    <text
+      x="60"
+      y="180"
+      fill="#8A8FA6"
+      font-size="13"
+      font-family="Arial"
+    >
+      Occupancy
+    </text>
+
+    <text
+      x="60"
+      y="212"
+      fill="#1F2937"
+      font-size="28"
+      font-weight="700"
+      font-family="Arial"
+    >
+      94%
+    </text>
+
+  </g>
+
+  <!-- Floating Card Right -->
+
+  <g filter="url(#shadow)">
+
+    <rect
+      x="350"
+      y="260"
+      width="130"
+      height="90"
+      rx="22"
+      fill="white"
+    />
+
+    <text
+      x="370"
+      y="290"
+      fill="#8A8FA6"
+      font-size="13"
+      font-family="Arial"
+    >
+      Revenue
+    </text>
+
+    <text
+      x="370"
+      y="325"
+      fill="#FF5B93"
+      font-size="26"
+      font-weight="700"
+      font-family="Arial"
+    >
+      ₹2.4L
+    </text>
+
+  </g>
+
+</svg>

@@ -13,35 +13,48 @@ class DashboardRepository:
     @staticmethod
     def get_summary(db: Session):
 
-        total_properties = db.query(func.count(Property.id)).scalar()
-
-        total_flats = db.query(func.count(Flat.id)).scalar()
-
-        occupied_flats = (
-            db.query(func.count(Flat.id))
-            .filter(Flat.status == "Occupied")
-            .scalar()
+        # Total Properties
+        total_properties = (
+            db.query(func.count(Property.id)).scalar() or 0
         )
 
-        vacant_flats = (
-            db.query(func.count(Flat.id))
-            .filter(Flat.status == "Available")
-            .scalar()
+        # Total Flats
+        total_flats = (
+            db.query(func.count(Flat.id)).scalar() or 0
         )
 
-        total_tenants = db.query(func.count(Tenant.id)).scalar()
+        # Total Tenants
+        total_tenants = (
+            db.query(func.count(Tenant.id)).scalar() or 0
+        )
 
+        # Active Leases
         active_leases = (
             db.query(func.count(Lease.id))
             .filter(Lease.status == "Active")
             .scalar()
+            or 0
         )
 
-        total_payments = db.query(func.count(Payment.id)).scalar()
-
-        total_rent_collected = (
-            db.query(func.sum(Payment.amount)).scalar()
+        # Occupied Flats (unique flats having an active lease)
+        occupied_flats = (
+            db.query(func.count(func.distinct(Lease.flat_id)))
+            .filter(Lease.status == "Active")
+            .scalar()
             or 0
+        )
+
+        # Vacant Flats
+        vacant_flats = max(total_flats - occupied_flats, 0)
+
+        # Total Payments
+        total_payments = (
+            db.query(func.count(Payment.id)).scalar() or 0
+        )
+
+        # Total Rent Collected
+        total_rent_collected = (
+            db.query(func.coalesce(func.sum(Payment.amount), 0)).scalar() or 0
         )
 
         return {
