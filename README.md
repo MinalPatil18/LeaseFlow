@@ -73,9 +73,7 @@ npm run dev
 
 ![Properties](screenshots/properties.png)
 
-### Payments
 
-![Payments](screenshots/payments.png)
 
 ## 👩‍💻 Author
 
